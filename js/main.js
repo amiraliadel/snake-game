@@ -140,3 +140,62 @@ const food = {
         ctx.closePath();
     }
 };
+// Snake obj
+const snake = {
+    head: new Tile(40, game.height/2),
+    body: [],
+    color: '#fff',
+    speed: 2,
+    directionX: 1,
+    directionY: 0,
+    initBody: function () { // Creates a body with 2 tiles as default.
+        for (let i = 2; i > 0; i--) {
+            this.body.push(new Body(i * ground.size - ground.size, game.height/2));
+        }
+    },
+    addTile: function (_x, _y) { // Adds 1 square to the body at the end of it and increases bodyLength.
+        this.body.push(new Body(_x, _y));
+    },
+    positions: function () {
+        const position = [];
+        position.push({x: this.head.x / ground.size, y: this.head.y / ground.size});
+        this.body.map(tile => {
+            position.push({x: tile.x / ground.size, y : tile.y / ground.size});
+        });
+        return position;
+    },
+    direction: function () {
+        this.directionX = game.direction.x;
+        this.directionY = game.direction.y;
+    },
+    move: function () {
+        // Moving head.
+        this.head.x += this.directionX * this.speed;
+        this.head.y += this.directionY * this.speed;
+        // Moving body
+        this.body.map(tile => { // Moves each tile of body to the last position of forepart.
+            if (tile.x < tile.path.x) tile.x += this.speed;
+            if (tile.x > tile.path.x) tile.x -= this.speed;
+            if (tile.y < tile.path.y) tile.y += this.speed;
+            if (tile.y > tile.path.y) tile.y -= this.speed;
+        });
+    },
+    updatePath: function () { // Updates the path of each tile of body to follow the head.     
+        this.body[0].path.x = this.head.x;
+        this.body[0].path.y = this.head.y;
+        for (let i = 1; i < this.body.length; i++) {
+            this.body[i].path.x = this.body[i-1].x;
+            this.body[i].path.y = this.body[i-1].y;
+        }
+    },
+    draw: function () { // Draws head & body in canvas.
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.rect(this.head.x, this.head.y, ground.size, ground.size);
+        this.body.map(tile => {
+            ctx.rect(tile.x, tile.y, ground.size, ground.size);
+        });
+        ctx.fill();
+        ctx.closePath();
+    }
+};
