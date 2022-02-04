@@ -9,6 +9,22 @@
     <title>Snake Game 2</title>
 </head>
 <body>
+    <div class="container">
+        <div class="title">
+            <div>
+                <h1>Snake - Game</h1>
+            </div>
+            <div>
+                <p>Score: <span id="score">0</span></p>
+            </div>
+        </div>
+        <canvas id="canvas"></canvas>
+        <div class="control">
+            <button onclick="game.start();">START</button>
+            <button onclick="game.stop();">STOP</button>
+            <button onclick="game.restart();">RESTART</button>
+        </div>
+    </div>
     <script src="./js/main.js"></script>
 </body>
 </html>
