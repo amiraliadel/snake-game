@@ -265,3 +265,5 @@ document.addEventListener('keydown', (event) => { // Controls the direction of s
       // Cancel the default action to avoid it being handled twice.
       event.preventDefault();
 }, true);
+// on load initilize the game.
+window.onload = loop, game.initGame();
