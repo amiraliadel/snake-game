@@ -111,3 +111,32 @@ const ground = {
         ctx.closePath();
     }
 };
+// Food obj
+const food = {
+    color: '#0000ff',
+    foods: [],
+    initFoods: function () { // Creates 1 food in center of surface as default.
+        this.addFood();
+        this.addFood();
+    },
+    addFood: function () { // Adds 1 food randomly on surface if the coordinate is equal to false.
+        const x = Math.floor(Math.random() * 19);
+        const y = Math.floor(Math.random() * 19);
+        if (ground.surface[y][x].value == false) {
+            this.foods.push({x: x * ground.size, y: y * ground.size, eaten: false});
+            ground.surface[y][x].value = true;
+        }
+    },
+    updateFoods: function () { // Removes the food from the foods array if smake.head collides with it.
+        this.foods = this.foods.filter(food => food.eaten == false);
+    },
+    draw: function () { // Draws foods on surface.
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        this.foods.map(food => {
+            ctx.rect(food.x, food.y, ground.size, ground.size);
+        });
+        ctx.fill();
+        ctx.closePath();
+    }
+};
