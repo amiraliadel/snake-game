@@ -11,6 +11,21 @@ const ctx = canvas.getContext('2d');
 const score = document.getElementById('score');
 canvas.width = 400;
 canvas.height = 400;
+// Classes.
+class Tile { // Tile Class.
+    constructor (_x, _y) {
+        this.x = _x;
+        this.y = _y;
+    }
+}
+
+class Body { // Body Class.
+    constructor (_x, _y) {
+        this.x = _x;
+        this.y = _y;
+        this.path = {x: 40, y: game.height/2};
+    }
+}
 // Game obj
 const game = {
     width: canvas.width,
