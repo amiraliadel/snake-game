@@ -76,3 +76,38 @@ const game = {
         }
     }
 };
+// Ground obj
+const ground = {
+    size: 20,
+    color: '#00ff00',
+    surface: [],
+    initSurface: function () { // Initializes the surface and sets the value for all squares to false as default.
+        for (let i = 0; i < game.width/this.size; i++) {
+            const row = [];
+            for (let z = 0; z < game.height/this.size; z++) {
+                row.push({x: z * this.size, y: i * this.size, value: false});
+            }
+            this.surface.push(row);
+        }
+    },
+    updateSurface: function (_positions) { // Updates the surface and set the value of each square to true, which the snake is on it.
+        this.surface.map(column => {
+            column.map(row => {
+                row.value = false;
+            });
+        });
+        _positions.map(position => {
+            if (position.x >= 0) {
+                this.surface[position.y][position.x].value = true;
+            }
+        });
+    },
+    draw: function () { // Draws surface.
+        ctx.beginPath();
+        ctx.strokeStyle = this.color;
+        ground.surface.map(column => {
+            column.map(row => ctx.strokeRect(row.x, row.y, this.size, this.size));
+        });
+        ctx.closePath();
+    }
+};
