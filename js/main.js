@@ -218,3 +218,50 @@ function loop () {
         }
     }
 }
+// key event to control the direction of the snake.
+document.addEventListener('keydown', (event) => { // Controls the direction of snake and starts/stops the game.
+    if (event.defaultPrevented) {
+        return; // Do nothing if the event was already processed.
+      } 
+      switch (event.key) {
+        case "ArrowDown": // Changes the direction to down and disables the up/down arrow.
+            if (game.arrowKey.up_down) {
+                game.direction.x = 0;
+                game.direction.y = 1;
+                game.arrowKey.left_right = true;
+                game.arrowKey.up_down = false;
+            }
+            break;
+        case "ArrowUp": // Changes the direction to up and disables the up/down arrow.
+            if (game.arrowKey.up_down) {
+                game.direction.x = 0;
+                game.direction.y = -1;
+                game.arrowKey.left_right = true;
+                game.arrowKey.up_down = false;
+            }
+            break;
+        case "ArrowLeft": // Changes the direction to left and disables the left/right arrow.
+            if (game.arrowKey.left_right) {
+                game.direction.x = -1;
+                game.direction.y = 0;
+                game.arrowKey.up_down = true;
+                game.arrowKey.left_right = false;
+            }
+            break;
+        case "ArrowRight": // Changes the direction to right and disables the left/right arrow.
+            if (game.arrowKey.left_right) {
+                game.direction.x = 1;
+                game.direction.y = 0;
+                game.arrowKey.up_down = true;
+                game.arrowKey.left_right = false;
+            }
+            break;
+        case " ": // Press space key to start/stop the game.
+            (!game.play) ? game.start(): game.stop();
+            break;
+        default:
+          return;
+      }
+      // Cancel the default action to avoid it being handled twice.
+      event.preventDefault();
+}, true);
