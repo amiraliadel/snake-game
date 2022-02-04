@@ -199,3 +199,22 @@ const snake = {
         ctx.closePath();
     }
 };
+// looping function
+function loop () {
+    animate(loop);
+    game.clearCanvas();
+    ground.draw();
+    snake.draw();
+    food.draw();
+    if (game.play) {
+        snake.move();
+        if (!(snake.head.x % ground.size) && !(snake.head.y % ground.size)) {
+            snake.direction(); // Changes the direction of snake.
+            game.bodyCollisionDetector(snake.positions()); // Game over if head collides with body tiles.
+            game.foodCollisionDetector(snake.head, food.foods); // Add 1 tile to the snake and removes detected food.
+            game.wallCollisionDetector(snake.head); // Game over if head collides with top, right, bottom or left of canvas.
+            ground.updateSurface(snake.positions()); // Sets the value of tiles to true, which the snake is on it.
+            snake.updatePath(); // Updates of the path of each body tiles.
+        }
+    }
+}
